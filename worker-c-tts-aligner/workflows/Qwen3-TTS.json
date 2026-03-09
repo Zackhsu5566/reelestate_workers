@@ -1,0 +1,67 @@
+{
+  "24": {
+    "inputs": {
+      "audio": "dnxhc-jm39q.mp3",
+      "audioUI": "/api/view?filename=dnxhc-jm39q.mp3&type=input&subfolder=&rand=0.3243930322426294"
+    },
+    "class_type": "LoadAudio",
+    "_meta": {
+      "title": "Load Audio"
+    }
+  },
+  "31": {
+    "inputs": {
+      "audioUI": "",
+      "audio": [
+        "48",
+        0
+      ]
+    },
+    "class_type": "PreviewAudio",
+    "_meta": {
+      "title": "Preview Audio"
+    }
+  },
+  "44": {
+    "inputs": {
+      "model_size": "base",
+      "language": "zh",
+      "audio": [
+        "24",
+        0
+      ]
+    },
+    "class_type": "WhisperSTT",
+    "_meta": {
+      "title": "Whisper STT 👂"
+    }
+  },
+  "48": {
+    "inputs": {
+      "target_text": "您好！為您推薦這間設計師的家。\n專約獨家！全原木裝潢，超大三加一房，雙衛浴開窗。\n\n\n售價兩千零四十八萬，最新降價五十萬。\n\n電梯大樓，管理費每月三千五百二十八元。\n十點一三坪平面車位，含在售價內。\n公設比百分之三十五，有花園、健身房、兒童遊戲室。\n\n\n雙面採光通風，一層四戶雙電梯。\n\n\n生活機能好，交通方便，國道一號、十號、左營高鐵站都在附近。\n八卦寮地勢最高，不會淹水，高樓層可觀賞義大煙火。\n房屋狀況極佳，無需整理即可入住。\n買房找雲層，讓您心想事成！\n\n\n電話：零九零六、六六五，三零五。\n\n永慶不動產，至真博愛店！\n",
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "Chinese",
+      "ref_text": "也可以說請木工啊，做收納櫃或者是說系統櫃，可以做到頂厚那你整個上方這邊 就是增加我們兩房的配置區 之前有跟大家講過就是兩房的話其實需要一些設計的概",
+      "seed": 130941525358097,
+      "max_new_tokens": 2048,
+      "top_p": 0.8,
+      "top_k": 20,
+      "temperature": 1,
+      "repetition_penalty": 1.05,
+      "x_vector_only": false,
+      "attention": "auto",
+      "unload_model_after_generate": false,
+      "custom_model_path": "",
+      "ref_audio": [
+        "24",
+        0
+      ]
+    },
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "_meta": {
+      "title": "🎭 Qwen3-TTS VoiceClone"
+    }
+  }
+}

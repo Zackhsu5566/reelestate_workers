@@ -1,0 +1,62 @@
+{
+  "1": {
+    "inputs": {
+      "model_name": "Qwen3-ASR/Qwen3-ASR-1.7B",
+      "language": "auto",
+      "device": "cuda",
+      "precision": "bf16",
+      "max_new_tokens": 256,
+      "flash_attention_2": false,
+      "chunk_size": 30,
+      "overlap": 2,
+      "audio": [
+        "2",
+        0
+      ],
+      "forced_aligner": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "Qwen3ASRTranscriber",
+    "_meta": {
+      "title": "Qwen3 ASR Transcriber"
+    }
+  },
+  "2": {
+    "inputs": {
+      "audio": "Voice 260107_222925.m4a",
+      "audioUI": "/api/view?filename=Voice%20260107_222925.m4a&type=input&subfolder=&rand=0.3403128302656948"
+    },
+    "class_type": "LoadAudio",
+    "_meta": {
+      "title": "Load Audio"
+    }
+  },
+  "4": {
+    "inputs": {
+      "preview": "",
+      "previewMode": null,
+      "source": [
+        "1",
+        1
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text"
+    }
+  },
+  "5": {
+    "inputs": {
+      "model_name": "Qwen3-ASR/Qwen3-ForcedAligner-0.6B",
+      "device": "cuda",
+      "precision": "bf16",
+      "flash_attention_2": false
+    },
+    "class_type": "Qwen3ForcedAlignerConfig",
+    "_meta": {
+      "title": "Qwen3 Forced Aligner Config"
+    }
+  }
+}

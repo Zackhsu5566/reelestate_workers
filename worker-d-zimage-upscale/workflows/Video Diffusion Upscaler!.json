@@ -1,0 +1,258 @@
+{
+  "1": {
+    "inputs": {
+      "video": "WanVideo_00047.mp4",
+      "force_rate": 0,
+      "custom_width": 0,
+      "custom_height": 0,
+      "frame_load_cap": 0,
+      "skip_first_frames": 0,
+      "select_every_nth": 1,
+      "format": "AnimateDiff"
+    },
+    "class_type": "VHS_LoadVideo",
+    "_meta": {
+      "title": "Load Video (Upload) 🎥🅥🅗🅢"
+    }
+  },
+  "2": {
+    "inputs": {
+      "upscale_model": [
+        "3",
+        0
+      ],
+      "image": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
+    }
+  },
+  "3": {
+    "inputs": {
+      "model_name": "4x_NMKD-Siax_200k.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "5": {
+    "inputs": {
+      "video_info": [
+        "1",
+        3
+      ]
+    },
+    "class_type": "VHS_VideoInfo",
+    "_meta": {
+      "title": "Video Info 🎥🅥🅗🅢"
+    }
+  },
+  "8": {
+    "inputs": {
+      "frame_rate": [
+        "5",
+        0
+      ],
+      "loop_count": 0,
+      "filename_prefix": "Upscaled_",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "16",
+        0
+      ],
+      "audio": [
+        "1",
+        2
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "9": {
+    "inputs": {
+      "text": "81",
+      "anything": [
+        "5",
+        1
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Frame Count"
+    }
+  },
+  "16": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "scale_by": [
+        "27",
+        0
+      ],
+      "image": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "ImageScaleBy",
+    "_meta": {
+      "title": "Upscale Image By"
+    }
+  },
+  "25": {
+    "inputs": {
+      "int_value": [
+        "5",
+        4
+      ]
+    },
+    "class_type": "IntToFloat",
+    "_meta": {
+      "title": "IntToFloat"
+    }
+  },
+  "26": {
+    "inputs": {
+      "a": [
+        "25",
+        0
+      ],
+      "b": 2,
+      "operation": "multiply"
+    },
+    "class_type": "easy mathFloat",
+    "_meta": {
+      "title": "Multiplier"
+    }
+  },
+  "27": {
+    "inputs": {
+      "a": 1080,
+      "b": [
+        "26",
+        0
+      ],
+      "operation": "divide"
+    },
+    "class_type": "easy mathFloat",
+    "_meta": {
+      "title": "Target Resolution"
+    }
+  },
+  "40": {
+    "inputs": {
+      "float_value": [
+        "5",
+        0
+      ],
+      "rounding_mode": "down (floor)"
+    },
+    "class_type": "FloatToInt",
+    "_meta": {
+      "title": "FloatToInt"
+    }
+  },
+  "41": {
+    "inputs": {
+      "a": [
+        "40",
+        0
+      ],
+      "b": [
+        "42",
+        0
+      ],
+      "operation": "multiply"
+    },
+    "class_type": "easy mathInt",
+    "_meta": {
+      "title": "Calculate New FPS"
+    }
+  },
+  "42": {
+    "inputs": {
+      "value": 2
+    },
+    "class_type": "easy int",
+    "_meta": {
+      "title": "FPS Multiplier"
+    }
+  },
+  "43": {
+    "inputs": {
+      "ckpt_name": "rife47.pth",
+      "clear_cache_after_n_frames": 50,
+      "multiplier": [
+        "42",
+        0
+      ],
+      "fast_mode": false,
+      "ensemble": true,
+      "scale_factor": 1,
+      "dtype": "float32",
+      "torch_compile": false,
+      "batch_size": 1,
+      "frames": [
+        "16",
+        0
+      ]
+    },
+    "class_type": "RIFE VFI",
+    "_meta": {
+      "title": "RIFE VFI (recommend rife47 and rife49)"
+    }
+  },
+  "44": {
+    "inputs": {
+      "frame_rate": [
+        "47",
+        0
+      ],
+      "loop_count": 0,
+      "filename_prefix": "Upscaled_Interpolated_",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "43",
+        0
+      ],
+      "audio": [
+        "1",
+        2
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "47": {
+    "inputs": {
+      "int_value": [
+        "41",
+        0
+      ]
+    },
+    "class_type": "IntToFloat",
+    "_meta": {
+      "title": "IntToFloat"
+    }
+  }
+}

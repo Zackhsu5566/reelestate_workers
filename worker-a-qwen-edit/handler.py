@@ -15,6 +15,7 @@ R2_ENDPOINT = os.environ.get("R2_ENDPOINT", "")
 R2_ACCESS_KEY = os.environ.get("R2_ACCESS_KEY", "")
 R2_SECRET_KEY = os.environ.get("R2_SECRET_KEY", "")
 R2_BUCKET = os.environ.get("R2_BUCKET", "reelestate-assets")
+R2_CDN = os.environ.get("R2_CDN", "https://assets.replowapp.com")
 
 COMFYUI_URL = "http://127.0.0.1:8188"
 
@@ -31,7 +32,7 @@ def get_s3_client():
 def upload_to_r2(local_path: str, r2_key: str) -> str:
     s3 = get_s3_client()
     s3.upload_file(local_path, R2_BUCKET, r2_key)
-    return f"{R2_ENDPOINT}/{R2_BUCKET}/{r2_key}"
+    return f"{R2_CDN}/{r2_key}"
 
 
 def download_file(url: str, dest: str):

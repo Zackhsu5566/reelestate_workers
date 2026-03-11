@@ -6,6 +6,7 @@ import os
 import json
 import time
 import uuid
+import random
 import requests
 import runpod
 import boto3
@@ -15,6 +16,7 @@ R2_ENDPOINT = os.environ.get("R2_ENDPOINT", "")
 R2_ACCESS_KEY = os.environ.get("R2_ACCESS_KEY", "")
 R2_SECRET_KEY = os.environ.get("R2_SECRET_KEY", "")
 R2_BUCKET = os.environ.get("R2_BUCKET", "reelestate-assets")
+R2_CDN = os.environ.get("R2_CDN", "https://assets.replowapp.com")
 
 COMFYUI_URL = "http://127.0.0.1:8188"
 
@@ -31,7 +33,7 @@ def get_s3_client():
 def upload_to_r2(local_path: str, r2_key: str) -> str:
     s3 = get_s3_client()
     s3.upload_file(local_path, R2_BUCKET, r2_key)
-    return f"{R2_ENDPOINT}/{R2_BUCKET}/{r2_key}"
+    return f"{R2_CDN}/{r2_key}"
 
 
 def download_file(url: str, dest: str):
@@ -79,14 +81,15 @@ def handler(job):
     Input:
     {
         "job_id": "xxx",
-        "first_frame_url": "https://r2.../first.jpg",
-        "last_frame_url": "https://r2.../last.jpg",
-        "clip_name": "主臥"
+        "first_frame_url": "https://assets.replowapp.com/xxx/first.jpg",
+        "last_frame_url": "https://assets.replowapp.com/xxx/last.jpg",
+        "clip_name": "主臥",
+        "prompt": "(optional) custom camera movement prompt"
     }
 
     Output:
     {
-        "video_url": "https://r2.../job_id/clips/主臥.mp4",
+        "video_url": "https://assets.replowapp.com/xxx/clips/主臥.mp4",
         "clip_name": "主臥"
     }
     """
@@ -100,22 +103,20 @@ def handler(job):
     download_file(first_url, "/comfyui/input/first.jpg")
     download_file(last_url, "/comfyui/input/last.jpg")
 
-    # Load workflow and inject parameters
+    # Load workflow
     workflow = load_workflow("_Wan2.2_fun_camera_FLF2V.json")
 
-    # Node 15 (LoadImage): first frame
-    workflow["15"]["inputs"]["image"] = "first.jpg"
-    # Node 16 (LoadImage): last frame
-    workflow["16"]["inputs"]["image"] = "last.jpg"
-    # Node 17 (WanFirstLastFrameToVideo): dimensions and length
-    width = job_input.get("width", 512)
-    height = job_input.get("height", 512)
-    length = job_input.get("num_frames", 81)
-    workflow["17"]["inputs"]["width"] = width
-    workflow["17"]["inputs"]["height"] = height
-    workflow["17"]["inputs"]["length"] = length
-    # Node 10 (KSamplerAdvanced): randomize seed
-    import random
+    # Node 15/16: image filenames already set in workflow template
+    # Node 17: width/height are dynamic connections from node 22, do NOT override
+    # Node 17: optionally override frame count
+    if "num_frames" in job_input:
+        workflow["17"]["inputs"]["length"] = job_input["num_frames"]
+
+    # Node 14: optional custom prompt
+    if "prompt" in job_input:
+        workflow["14"]["inputs"]["text"] = job_input["prompt"]
+
+    # Node 10: randomize seed
     workflow["10"]["inputs"]["noise_seed"] = random.randint(0, 2**53)
 
     prompt_id = queue_workflow(workflow)

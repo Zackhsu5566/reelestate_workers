@@ -183,7 +183,7 @@
   },
   "15": {
     "inputs": {
-      "image": "176982129160240706.jpeg!1000x.water2.png"
+      "image": "first.jpg"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -192,7 +192,7 @@
   },
   "16": {
     "inputs": {
-      "image": "ComfyUI_temp_mqikt_00001_ (1) (1).png"
+      "image": "last.jpg"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -201,8 +201,14 @@
   },
   "17": {
     "inputs": {
-      "width": 512,
-      "height": 512,
+      "width": [
+        "22",
+        0
+      ],
+      "height": [
+        "22",
+        1
+      ],
       "length": 81,
       "batch_size": 1,
       "positive": [
@@ -218,11 +224,11 @@
         0
       ],
       "start_image": [
-        "15",
+        "20",
         0
       ],
       "end_image": [
-        "16",
+        "21",
         0
       ]
     },
@@ -233,7 +239,7 @@
   },
   "18": {
     "inputs": {
-      "unet_name": "wan2.2\\wan2.2_fun_camera_high_noise_14B_fp8_scaled.safetensors",
+      "unet_name": "wan2.2/wan2.2_fun_camera_high_noise_14B_fp8_scaled.safetensors",
       "weight_dtype": "default"
     },
     "class_type": "UNETLoader",
@@ -243,12 +249,54 @@
   },
   "19": {
     "inputs": {
-      "unet_name": "wan2.2\\wan2.2_fun_camera_low_noise_14B_fp8_scaled.safetensors",
+      "unet_name": "wan2.2/wan2.2_fun_camera_low_noise_14B_fp8_scaled.safetensors",
       "weight_dtype": "default"
     },
     "class_type": "UNETLoader",
     "_meta": {
       "title": "Load Diffusion Model"
+    }
+  },
+  "20": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "megapixels": 1,
+      "resolution_steps": 1,
+      "image": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "ImageScaleToTotalPixels",
+    "_meta": {
+      "title": "ImageScaleToTotalPixels"
+    }
+  },
+  "21": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "megapixels": 1,
+      "resolution_steps": 1,
+      "image": [
+        "16",
+        0
+      ]
+    },
+    "class_type": "ImageScaleToTotalPixels",
+    "_meta": {
+      "title": "ImageScaleToTotalPixels"
+    }
+  },
+  "22": {
+    "inputs": {
+      "image": [
+        "20",
+        0
+      ]
+    },
+    "class_type": "GetImageSize+",
+    "_meta": {
+      "title": "🔧 Get Image Size"
     }
   }
 }

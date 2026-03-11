@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:2.6.0-cuda12.6-cudnn9-runtime
+FROM pytorch/pytorch:2.7.1-cuda12.6-cudnn9-runtime
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV COMFYUI_DIR=/comfyui
@@ -29,30 +29,31 @@ RUN cd $COMFYUI_DIR/custom_nodes && \
     git clone https://github.com/danTheMonk/comfyui-int-and-float.git
 
 # Download models -- Z-Image
-RUN pip install --no-cache-dir huggingface_hub && \
+RUN pip install --no-cache-dir huggingface_hub
+RUN \
     # UNET
-    huggingface-cli download Comfy-Org/z_image_turbo \
+    hf download Comfy-Org/z_image_turbo \
         split_files/diffusion_models/z_image_turbo_bf16.safetensors \
         --local-dir /tmp/hf-zi && \
     mkdir -p $COMFYUI_DIR/models/diffusion_models && \
     mv /tmp/hf-zi/split_files/diffusion_models/z_image_turbo_bf16.safetensors \
         $COMFYUI_DIR/models/diffusion_models/ && \
     # CLIP
-    huggingface-cli download Comfy-Org/z_image_turbo \
+    hf download Comfy-Org/z_image_turbo \
         split_files/text_encoders/qwen_3_4b.safetensors \
         --local-dir /tmp/hf-zi && \
     mkdir -p $COMFYUI_DIR/models/text_encoders && \
     mv /tmp/hf-zi/split_files/text_encoders/qwen_3_4b.safetensors \
         $COMFYUI_DIR/models/text_encoders/ && \
     # VAE
-    huggingface-cli download Comfy-Org/z_image_turbo \
+    hf download Comfy-Org/z_image_turbo \
         split_files/vae/ae.safetensors \
         --local-dir /tmp/hf-zi && \
     mkdir -p $COMFYUI_DIR/models/vae && \
     mv /tmp/hf-zi/split_files/vae/ae.safetensors \
         $COMFYUI_DIR/models/vae/ && \
     # ControlNet
-    huggingface-cli download alibaba-pai/Z-Image-Turbo-Fun-Controlnet-Union \
+    hf download alibaba-pai/Z-Image-Turbo-Fun-Controlnet-Union \
         Z-Image-Turbo-Fun-Controlnet-Union.safetensors \
         --local-dir /tmp/hf-cn && \
     mkdir -p $COMFYUI_DIR/models/model_patches && \

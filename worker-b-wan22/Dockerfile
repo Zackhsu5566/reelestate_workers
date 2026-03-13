@@ -25,6 +25,8 @@ RUN cd $COMFYUI_DIR/custom_nodes && \
 
 # Download models
 RUN pip install --no-cache-dir huggingface_hub
+ARG HF_TOKEN
+ENV HF_TOKEN=${HF_TOKEN}
 RUN \
     # UNET - high noise
     hf download Comfy-Org/Wan_2.2_ComfyUI_Repackaged \

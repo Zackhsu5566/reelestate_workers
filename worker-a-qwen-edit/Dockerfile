@@ -51,7 +51,7 @@ RUN \
         --local-dir /tmp/hf-lora && \
     mkdir -p $COMFYUI_DIR/models/loras/Qwen && \
     mv "/tmp/hf-lora/镜头转换.safetensors" \
-        $COMFYUI_DIR/models/loras/Qwen/ && \
+        "$COMFYUI_DIR/models/loras/Qwen/camera_angle.safetensors" && \
     # LoRA - Lightning acceleration
     hf download lightx2v/Qwen-Image-Lightning \
         Qwen-Image-Lightning-8steps-V2.0.safetensors \
